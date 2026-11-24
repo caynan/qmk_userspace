@@ -46,8 +46,9 @@ Write `_______` for keys that should fall through to base, `KC_NO` for keys that
    together.
 
 Pushing to `main` runs two workflows: `Build QMK firmware` (attaches `dz60_caynan.hex` to the
-`latest` release) and `Keymap image` (the `--check` above). On this fork a push has not always
-triggered the build; `gh workflow run build_binaries.yaml` starts it by hand.
+`latest` release) and `Keymap image` (the `--check` above). Pass `--repo caynan/qmk_userspace`
+to every `gh` command here: this clone's `gh` default repo is upstream `qmk/qmk_userspace`, so a
+bare `gh run list` shows upstream's runs and makes it look as if the push triggered nothing.
 
 ## Flashing
 
