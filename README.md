@@ -1,4 +1,31 @@
-# QMK Userspace
+# caynan's QMK userspace
+
+My keymaps, built against upstream [QMK](https://github.com/qmk/qmk_firmware) without forking it.
+
+| Keyboard | Keymap | Docs |
+|---|---|---|
+| KBDFans DZ60 | [`keyboards/dz60/keymaps/caynan`](keyboards/dz60/keymaps/caynan) | [layers, building, flashing](keyboards/dz60/keymaps/caynan/README.md) |
+
+![DZ60 keymap: Base, Fn and Nav layers](keyboards/dz60/keymaps/caynan/keymap.svg)
+
+- **Build:** `qmk compile -kb dz60 -km caynan`, or take `dz60_caynan.hex` from the
+  [latest release](https://github.com/caynan/qmk_userspace/releases/latest), which CI rebuilds
+  on every push.
+- **Flash:** `qmk flash -kb dz60 -km caynan`, then Fn+Esc on the board. Read the keymap's
+  README first: the old firmware cannot be backed up.
+- **Change a key:** edit `keymap.c`, run `tools/draw-keymap/draw.sh` to redraw the image above,
+  and update the layer table in the keymap's README. The `Keymap image` workflow fails when the
+  image is stale. Claude Code users can ask for it in plain words; the `dz60-keymap` skill in
+  `.claude/skills/` walks through the same steps.
+- **Tools:** `tools/draw-keymap/` draws keymaps with
+  [keymap-drawer](https://github.com/caksoylar/keymap-drawer). `tools/keymap-capture/` recovered
+  this keymap from the running board when its source was lost.
+
+---
+
+The rest of this file is the upstream template's README.
+
+## QMK Userspace
 
 This is a template repository which allows for an external set of QMK keymaps to be defined and compiled. This is useful for users who want to maintain their own keymaps without having to fork the [main QMK repository](https://github.com/qmk/qmk_firmware). You must still fork the main QMK repository if writing firmware for a *new* keyboard.
 

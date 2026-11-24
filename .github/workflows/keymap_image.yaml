@@ -1,0 +1,39 @@
+name: Keymap image
+
+# Fails when keyboards/*/keymaps/*/keymap.svg no longer matches keymap.c.
+# Fix locally with tools/draw-keymap/draw.sh and commit the SVG.
+
+on:
+  push:
+    paths:
+      - 'keyboards/**'
+      - 'tools/draw-keymap/**'
+      - '.github/workflows/keymap_image.yaml'
+  pull_request:
+    paths:
+      - 'keyboards/**'
+      - 'tools/draw-keymap/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v6
+
+      # c2json needs the keyboard definitions, not the submodules or toolchains.
+      - name: Fetch qmk_firmware
+        run: git clone --depth 1 https://github.com/qmk/qmk_firmware.git "$RUNNER_TEMP/qmk_firmware"
+
+      - name: Install the qmk CLI
+        run: uv tool install qmk
+
+      - name: Check the keymap image
+        env:
+          QMK_HOME: ${{ runner.temp }}/qmk_firmware
+        run: tools/draw-keymap/draw.sh --check
